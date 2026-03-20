@@ -21,14 +21,7 @@ const allowedOrigins = new Set([
 ]);
 
 app.use(
-  cors({
-    origin(origin, cb) {
-      if (!origin) return cb(null, true);
-      if (allowedOrigins.has(origin)) return cb(null, true);
-      return cb(new Error("Not allowed by CORS"));
-    },
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(express.json({ limit: "1mb" }));
