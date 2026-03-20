@@ -17,6 +17,7 @@ const allowedOrigins = new Set([
   "http://localhost:5174",
   "http://127.0.0.1:5173",
   "http://localhost:3000",
+  "https://69bd413a614b0026ebe23932--100-day-fin.netlify.app"
 ]);
 
 app.use(
