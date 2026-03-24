@@ -69,15 +69,33 @@ async function connectWithRetry() {
 
 async function start() {
   connectWithRetry();
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`API running on http://localhost:${PORT}`);
     console.log(`API Health: http://localhost:${PORT}/health`);
+  });
+
+  server.on("error", (err) => {
+    console.error("Server failed to start:", err);
+    process.exit(1);
   });
 }
 
 start();
 
 process.on("SIGINT", async () => {
+  console.log("SIGINT received, shutting down...");
   await disconnect();
   process.exit(0);
+});
+
+process.on("unhandledRejection", async (reason) => {
+  console.error("Unhandled Rejection:", reason);
+  await disconnect();
+  process.exit(1);
+});
+
+process.on("uncaughtException", async (err) => {
+  console.error("Uncaught Exception:", err);
+  await disconnect();
+  process.exit(1);
 });

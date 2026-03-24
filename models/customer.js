@@ -7,6 +7,7 @@ const CustomerSchema = new mongoose.Schema(
     name: { type: String, required: true },
     phone: { type: String, default: "" },
     address: { type: String, default: "" },
+    panCard: { type: String, default: "" },
     createdAt: { type: String, default: () => new Date().toISOString() },
   },
   { versionKey: false }

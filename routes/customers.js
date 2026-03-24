@@ -19,9 +19,9 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { name, phone = "", address = "" } = req.body || {};
+    const { name, phone = "", address = "", panCard = "" } = req.body || {};
     if (!name) return res.status(400).json({ status: "error", message: "name is required" });
-    const doc = await Customer.create({ name, phone, address });
+    const doc = await Customer.create({ name, phone, address, panCard });
     return res.status(201).json({ status: "success", data: toPublic(doc.toObject()) });
   } catch (err) {
     return next(err);
@@ -44,6 +44,7 @@ router.put("/:id", async (req, res, next) => {
     if (req.body?.name !== undefined) fields.name = req.body.name;
     if (req.body?.phone !== undefined) fields.phone = req.body.phone;
     if (req.body?.address !== undefined) fields.address = req.body.address;
+    if (req.body?.panCard !== undefined) fields.panCard = req.body.panCard;
 
     if (Object.keys(fields).length === 0) {
       return res.status(400).json({ status: "error", message: "No fields to update" });
